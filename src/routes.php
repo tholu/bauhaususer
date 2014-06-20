@@ -9,21 +9,17 @@
  * file that was distributed with this source code.
  */
 
-Route::group(['prefix' => Config::get('bauhaus::admin.uri')], function () {
+Route::get(Config::get('bauhaus::admin.auth.login_path'), [
+	'as'   => 'admin.sessions.create',
+	'uses' => 'KraftHaus\BauhausUser\SessionsController@create'
+]);
 
-	Route::get('sign-in', [
-		'as'   => 'admin.sessions.create',
-		'uses' => 'KraftHaus\BauhausUser\SessionsController@create'
-	]);
+Route::post(Config::get('bauhaus::admin.auth.login_path'), [
+	'as'   => 'admin.sessions.store',
+	'uses' => 'KraftHaus\BauhausUser\SessionsController@store'
+]);
 
-	Route::post('sign-in', [
-		'as'   => 'admin.sessions.store',
-		'uses' => 'KraftHaus\BauhausUser\SessionsController@store'
-	]);
-
-	Route::get('sign-out', [
-		'as'   => 'admin.sessions.sign-out',
-		'uses' => 'KraftHaus\BauhausUser\SessionsController@destroy'
-	]);
-
-});
+Route::get(Config::get('bauhaus::admin.auth.logout_path'), [
+	'as'   => 'admin.sessions.sign-out',
+	'uses' => 'KraftHaus\BauhausUser\SessionsController@destroy'
+]);

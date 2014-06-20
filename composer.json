@@ -1,0 +1,27 @@
+{
+	"name": "krafthaus/bauhaususer",
+	"description": "User support for bauhaus",
+	"keywords": ["admin generator", "cms", "admin", "krafthaus", "laravel", "backend", "form", "forms"],
+	"type": "laravel-package",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "KraftHaus",
+			"email": "hello@krafthaus.nl"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0"
+	},
+	"autoload": {
+		"classmap": [
+			"src/controllers",
+			"src/models",
+			"src/admin"
+		],
+		"psr-0": {
+			"KraftHaus\\BauhausUser": "src/"
+		}
+	},
+	"minimum-stability": "stable"
+}

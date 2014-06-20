@@ -64,7 +64,12 @@ class BauhausUserServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-		//
+		// add the install command to the application
+		$this->app['bauhaus:user:register'] = $this->app->share(function($app) {
+			return new RegisterCommand($app);
+		});
+
+		$this->commands('bauhaus:user:register');
 	}
 
 	/**

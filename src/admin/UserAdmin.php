@@ -46,11 +46,13 @@ class UserAdmin extends Admin
 
 	public function create($input)
 	{
-		User::$rules['password'] = ['required'];
+		if ($input['password'] == '') {
+			unset($input['password']);
+		} else {
+			$input['password'] = Hash::make($input['password']);
+		}
 
-		$user = new User();
-		print_r($user);
-		exit();
+		User::create($input);
 	}
 
 	public function update($input)
@@ -64,9 +66,6 @@ class UserAdmin extends Admin
 		}
 
 		$user->update($input);
-
-//		print_r($user->toArray());
-//		exit();
 	}
 
 }

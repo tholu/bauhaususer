@@ -46,6 +46,17 @@ to:
 ]
 ```
 
+### Update auth.model
+In `app/auth.php` update
+```php
+'model' => 'User'
+```
+
+to:
+```php
+'model' => 'KraftHaus\BauhausUser\User'
+```
+
 ### Run the migrations
 ```
 $ php artisan migrate --package=krafthaus/bauhaususer

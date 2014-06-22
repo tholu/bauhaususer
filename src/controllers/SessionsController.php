@@ -56,8 +56,9 @@ class SessionsController extends Controller
 		}
 
 		$input = [
-			'email'    => Input::get('email'),
-			'password' => Input::get('password')
+			'email'     => Input::get('email'),
+			'password'  => Input::get('password'),
+			'is_active' => 1
 		];
 
 		if (Auth::attempt($input, Input::has('remember'))) {

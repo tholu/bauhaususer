@@ -46,7 +46,8 @@ class User extends Model implements UserInterface, RemindableInterface
 		'email',
 		'password',
 		'first_name',
-		'last_name'
+		'last_name',
+		'is_active'
 	];
 
 	/**

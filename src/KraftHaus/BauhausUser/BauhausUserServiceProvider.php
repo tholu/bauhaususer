@@ -69,7 +69,19 @@ class BauhausUserServiceProvider extends ServiceProvider
 			return new RegisterCommand($app);
 		});
 
+		// add the activate command to the application
+		$this->app['bauhaus:user:activate'] = $this->app->share(function($app) {
+			return new ActivateCommand($app);
+		});
+
+		// add the deactivate command to the application
+		$this->app['bauhaus:user:deactivate'] = $this->app->share(function($app) {
+			return new DeactivateCommand($app);
+		});
+
 		$this->commands('bauhaus:user:register');
+		$this->commands('bauhaus:user:activate');
+		$this->commands('bauhaus:user:deactivate');
 	}
 
 	/**

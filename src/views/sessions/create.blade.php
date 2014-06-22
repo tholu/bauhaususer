@@ -35,6 +35,17 @@
 
 						<div class="form-group">
 							<div class="col-sm-8 col-sm-offset-4">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="remember">
+										Remember me
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-4">
 								<input type="submit" class="btn btn-default btn-red btn-rounded" value="Sign-in">
 							</div>
 						</div>

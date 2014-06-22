@@ -60,7 +60,7 @@ class SessionsController extends Controller
 			'password' => Input::get('password')
 		];
 
-		if (Auth::attempt($input, Input::get('remember'))) {
+		if (Auth::attempt($input, Input::has('remember'))) {
 			Session::flash('message.success', 'User logged in.');
 			return Redirect::route('admin.dashboard');
 		}

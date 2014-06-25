@@ -52,7 +52,8 @@ class RegisterCommand extends Command
 			'email'      => $email,
 			'password'   => $password,
 			'first_name' => $firstname,
-			'last_name'  => $lastname
+			'last_name'  => $lastname,
+			'is_active'  => 1
 		]);
 
 		$this->info('User created with success');

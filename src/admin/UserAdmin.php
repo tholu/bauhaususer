@@ -82,6 +82,19 @@ class UserAdmin extends Admin
 	}
 
 	/**
+	 * Scoping on active state.
+	 *
+	 * @param  \KraftHaus\Bauhaus\Mapper\ScopeMapper $mapper
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function configureScopes($mapper)
+	{
+		$mapper->scope('active')->label('Active members');
+	}
+
+	/**
 	 * Create hook.
 	 *
 	 * @param  array $input

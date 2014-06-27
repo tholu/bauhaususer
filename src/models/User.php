@@ -71,4 +71,17 @@ class User extends Model implements UserInterface, RemindableInterface
 		return sprintf('%s %s', $this->first_name, $this->last_name);
 	}
 
+	/**
+	 * Active scope.
+	 *
+	 * @param $query
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function scopeActive($query)
+	{
+		return $query->where('is_active', '1');
+	}
+
 }

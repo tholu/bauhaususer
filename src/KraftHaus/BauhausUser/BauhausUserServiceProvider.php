@@ -49,6 +49,10 @@ class BauhausUserServiceProvider extends ServiceProvider
 			]);
 
 			app('krafthaus.bauhaus.menu')->addMenu('right', [
+				'image' => 'http://www.gravatar.com/avatar/be8cae41ca14f2c7e38873a3497c5485?s=20'
+			]);
+
+			app('krafthaus.bauhaus.menu')->addMenu('right', [
 				'title' => 'Sign Out',
 				'url'   => url(Config::get('bauhaus::admin.auth.logout_path'))
 			]);

@@ -49,7 +49,7 @@ class BauhausUserServiceProvider extends ServiceProvider
 			]);
 
 			app('krafthaus.bauhaus.menu')->addMenu('right', [
-				'image' => 'http://www.gravatar.com/avatar/be8cae41ca14f2c7e38873a3497c5485?s=35'
+				'image' => sprintf('http://www.gravatar.com/avatar/%s?s=35', md5(Auth::user()->email))
 			]);
 
 			app('krafthaus.bauhaus.menu')->addMenu('right', [

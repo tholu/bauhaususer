@@ -66,6 +66,7 @@ class UserAdmin extends Admin
 		$mapper->tab('Info', function ($mapper) {
 			$mapper->text('first_name')->label('First name');
 			$mapper->text('last_name')->label('Last name');
+			$mapper->belongsToMany('groups')->display('name');
 		});
 	}
 

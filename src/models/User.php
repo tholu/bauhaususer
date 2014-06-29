@@ -92,7 +92,7 @@ class User extends Model implements UserInterface, RemindableInterface
 	 */
 	public function groups()
 	{
-		return $this->hasMany('KraftHaus\BauhausUser\Group');
+		return $this->belongsToMany('KraftHaus\BauhausUser\Group');
 	}
 
 }

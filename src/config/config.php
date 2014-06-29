@@ -17,7 +17,15 @@ return [
 	 */
 	'menu' => [
 		'title' => 'Users',
-		'class' => 'KraftHaus\BauhausUser\User'
+		'children' => [
+			[
+				'title' => 'Overview',
+				'class' => 'KraftHaus\BauhausUser\User'
+			], [
+				'title' => 'Groups',
+				'class' => 'KraftHaus\BauhausUser\Group'
+			]
+		]
 	],
 
 	/**

@@ -84,4 +84,15 @@ class User extends Model implements UserInterface, RemindableInterface
 		return $query->where('is_active', '1');
 	}
 
+	/**
+	 * Groups relation.
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function groups()
+	{
+		return $this->belongsToMany('KraftHaus\BauhausUser\Group');
+	}
+
 }

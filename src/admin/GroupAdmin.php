@@ -33,7 +33,7 @@ class GroupAdmin extends Admin
 	protected $pluralName = 'groups';
 
 	/**
-	 * Configure the UserAdmin list.
+	 * Configure the GroupAdmin list.
 	 *
 	 * @param \KraftHaus\Bauhaus\Mapper\ListMapper $mapper
 	 *
@@ -46,7 +46,7 @@ class GroupAdmin extends Admin
 	}
 
 	/**
-	 * Configure the UserAdmin form.
+	 * Configure the GroupAdmin form.
 	 *
 	 * @param  \KraftHaus\Bauhaus\Mapper\FormMapper $mapper
 	 *

@@ -14,26 +14,26 @@ namespace KraftHaus\BauhausUser;
 use KraftHaus\Bauhaus\Admin;
 
 /**
- * Class GroupAdmin
+ * Class PermissionAdmin
  * @package KraftHaus\BauhausUser
  */
-class GroupAdmin extends Admin
+class PermissionAdmin extends Admin
 {
 
 	/**
 	 * Override the singular name.
 	 * @var string
 	 */
-	protected $singularName = 'group';
+	protected $singularName = 'permission';
 
 	/**
 	 * Override the plural name.
 	 * @var string
 	 */
-	protected $pluralName = 'groups';
+	protected $pluralName = 'permissions';
 
 	/**
-	 * Configure the GroupAdmin list.
+	 * Configure the PermissionAdmin list.
 	 *
 	 * @param \KraftHaus\Bauhaus\Mapper\ListMapper $mapper
 	 *
@@ -43,11 +43,12 @@ class GroupAdmin extends Admin
 	public function configureList($mapper)
 	{
 		$mapper->identifier('name');
-		$mapper->belongsToMany('permissions')->display('name');
+		$mapper->string('value');
+		$mapper->string('description');
 	}
 
 	/**
-	 * Configure the GroupAdmin form.
+	 * Configure the UserAdmin form.
 	 *
 	 * @param  \KraftHaus\Bauhaus\Mapper\FormMapper $mapper
 	 *
@@ -56,8 +57,23 @@ class GroupAdmin extends Admin
 	 */
 	public function configureForm($mapper)
 	{
-		$mapper->text('name')->label('Name');
-		$mapper->belongsToMany('permissions')->display('name');
+		$mapper->text('name')->label('Name')->placeholder('The permission name');
+		$mapper->text('value')->placeholder('The permission value');
+		$mapper->textarea('description')->placeholder('The permission description');
+	}
+
+	/**
+	 * Configure the PermissionAdmin filters.
+	 * @param  \KraftHaus\Bauhaus\Mapper\FilterMapper $mapper
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function configureFilters($mapper)
+	{
+		$mapper->text('name');
+		$mapper->text('value');
+		$mapper->text('description');
 	}
 
 }

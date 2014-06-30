@@ -14,10 +14,10 @@ namespace KraftHaus\BauhausUser;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Group
+ * Class Permission
  * @package KraftHaus\BauhausUser
  */
-class Group extends Model
+class Permission extends Model
 {
 
 	/**
@@ -25,7 +25,8 @@ class Group extends Model
 	 * @var array
 	 */
 	public static $rules = [
-		'name' => ['required']
+		'name'  => ['required'],
+		'value' => ['required']
 	];
 
 	/**
@@ -33,18 +34,9 @@ class Group extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'name'
+		'name',
+		'value',
+		'description'
 	];
-
-	/**
-	 * Permission relation.
-	 *
-	 * @access public
-	 * @return mixed
-	 */
-	public function permissions()
-	{
-		return $this->belongsToMany('KraftHaus\BauhausUser\Permission');
-	}
 
 }

@@ -24,6 +24,9 @@ return [
 			], [
 				'title' => 'Groups',
 				'class' => 'KraftHaus\BauhausUser\Group'
+			], [
+				'title' => 'Permissions',
+				'class' => 'KraftHaus\BauhausUser\Permission'
 			]
 		]
 	],

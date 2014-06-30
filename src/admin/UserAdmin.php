@@ -45,6 +45,7 @@ class UserAdmin extends Admin
 	{
 		$mapper->identifier('full_name')->label('Name');
 		$mapper->string('email');
+		$mapper->belongsToMany('groups')->display('name');
 	}
 
 	/**

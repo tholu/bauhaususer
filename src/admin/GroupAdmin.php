@@ -11,7 +11,6 @@ namespace KraftHaus\BauhausUser;
  * file that was distributed with this source code.
  */
 
-use Illuminate\Support\Facades\Hash;
 use KraftHaus\Bauhaus\Admin;
 
 /**

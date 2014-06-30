@@ -22,16 +22,18 @@ class UserAdmin extends Admin
 {
 
 	/**
-	 * Override the singular name.
-	 * @var string
+	 * Public constructor override to set translatable names (singular, plural).
+	 *
+	 * @access public
+	 * @return void
 	 */
-	protected $singularName = 'user';
+	public function __construct()
+	{
+		parent::__construct();
 
-	/**
-	 * Override the plural name.
-	 * @var string
-	 */
-	protected $pluralName = 'users';
+		$this->setSingularName(trans('bauhaususer::admin.users.title.singular'));
+		$this->setPluralName(trans('bauhaususer::admin.users.title.plural'));
+	}
 
 	/**
 	 * Configure the UserAdmin list.
@@ -43,9 +45,15 @@ class UserAdmin extends Admin
 	 */
 	public function configureList($mapper)
 	{
-		$mapper->identifier('full_name')->label('Name');
-		$mapper->string('email');
-		$mapper->belongsToMany('groups')->display('name');
+		$mapper->identifier('full_name')
+			->label(trans('bauhaususer::admin.users.list.name'));
+
+		$mapper->string('email')
+			->label(trans('bauhaususer::admin.users.list.email'));
+
+		$mapper->belongsToMany('groups')
+			->display('name')
+			->label(trans('bauhaususer::admin.users.list.groups'));
 	}
 
 	/**
@@ -59,15 +67,26 @@ class UserAdmin extends Admin
 	public function configureForm($mapper)
 	{
 		$mapper->tab('General', function ($mapper) {
-			$mapper->text('email');
-			$mapper->password('password');
-			$mapper->password('password_confirmation')->label('Confirm Password');
+			$mapper->text('email')
+				->label(trans('bauhaususer::admin.users.form.email'));
+
+			$mapper->password('password')
+				->label(trans('bauhaususer::admin.users.form.password'));
+
+			$mapper->password('password_confirmation')
+				->label(trans('bauhaususer::admin.users.form.password-confirm'));
 		});
 
 		$mapper->tab('Info', function ($mapper) {
-			$mapper->text('first_name')->label('First name');
-			$mapper->text('last_name')->label('Last name');
-			$mapper->belongsToMany('groups')->display('name');
+			$mapper->text('first_name')
+				->label(trans('bauhaususer::admin.users.form.first-name'));
+
+			$mapper->text('last_name')
+				->label(trans('bauhaususer::admin.users.form.last-name'));
+
+			$mapper->belongsToMany('groups')
+				->display('name')
+				->label(trans('bauhaususer::admin.users.form.groups'));
 		});
 	}
 
@@ -80,7 +99,8 @@ class UserAdmin extends Admin
 	 */
 	public function configureFilters($mapper)
 	{
-		$mapper->text('email')->label('Email');
+		$mapper->text('email')
+			->label(trans('bauhaususer::admin.users.filter.email'));
 	}
 
 	/**
@@ -93,7 +113,8 @@ class UserAdmin extends Admin
 	 */
 	public function configureScopes($mapper)
 	{
-		$mapper->scope('active')->label('Active members');
+		$mapper->scope('active')
+			->label(trans('bauhaususer::admin.users.scope.active-users'));
 	}
 
 	/**

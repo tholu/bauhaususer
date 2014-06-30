@@ -21,16 +21,18 @@ class GroupAdmin extends Admin
 {
 
 	/**
-	 * Override the singular name.
-	 * @var string
+	 * Public constructor override to set translatable names (singular, plural).
+	 *
+	 * @access public
+	 * @return void
 	 */
-	protected $singularName = 'group';
+	public function __construct()
+	{
+		parent::__construct();
 
-	/**
-	 * Override the plural name.
-	 * @var string
-	 */
-	protected $pluralName = 'groups';
+		$this->setSingularName(trans('bauhaususer::admin.groups.title.singular'));
+		$this->setPluralName(trans('bauhaususer::admin.groups.title.plural'));
+	}
 
 	/**
 	 * Configure the GroupAdmin list.
@@ -42,8 +44,12 @@ class GroupAdmin extends Admin
 	 */
 	public function configureList($mapper)
 	{
-		$mapper->identifier('name');
-		$mapper->belongsToMany('permissions')->display('name');
+		$mapper->identifier('name')
+			->label(trans('bauhaususer::admin.groups.list.name'));
+
+		$mapper->belongsToMany('permissions')
+			->display('name')
+			->label(trans('bauhaususer::admin.groups.list.permissions'));
 	}
 
 	/**
@@ -56,8 +62,12 @@ class GroupAdmin extends Admin
 	 */
 	public function configureForm($mapper)
 	{
-		$mapper->text('name')->label('Name');
-		$mapper->belongsToMany('permissions')->display('name');
+		$mapper->text('name')
+			->label(trans('bauhaususer::admin.groups.form.name'));
+
+		$mapper->belongsToMany('permissions')
+			->display('name')
+			->label(trans('bauhaususer::admin.groups.form.permissions'));
 	}
 
 }

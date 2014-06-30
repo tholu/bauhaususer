@@ -21,16 +21,18 @@ class PermissionAdmin extends Admin
 {
 
 	/**
-	 * Override the singular name.
-	 * @var string
+	 * Public constructor override to set translatable names (singular, plural).
+	 *
+	 * @access public
+	 * @return void
 	 */
-	protected $singularName = 'permission';
+	public function __construct()
+	{
+		parent::__construct();
 
-	/**
-	 * Override the plural name.
-	 * @var string
-	 */
-	protected $pluralName = 'permissions';
+		$this->setSingularName(trans('bauhaususer::admin.permissions.title.singular'));
+		$this->setPluralName(trans('bauhaususer::admin.permissions.title.plural'));
+	}
 
 	/**
 	 * Configure the PermissionAdmin list.
@@ -42,9 +44,14 @@ class PermissionAdmin extends Admin
 	 */
 	public function configureList($mapper)
 	{
-		$mapper->identifier('name');
-		$mapper->string('value');
-		$mapper->string('description');
+		$mapper->identifier('name')
+			->label(trans('bauhaususer::admin.permissions.list.name'));
+
+		$mapper->string('value')
+			->label(trans('bauhaususer::admin.permissions.list.value'));
+
+		$mapper->string('description')
+			->label(trans('bauhaususer::admin.permissions.list.description'));
 	}
 
 	/**
@@ -57,9 +64,17 @@ class PermissionAdmin extends Admin
 	 */
 	public function configureForm($mapper)
 	{
-		$mapper->text('name')->label('Name')->placeholder('The permission name');
-		$mapper->text('value')->placeholder('The permission value');
-		$mapper->textarea('description')->placeholder('The permission description');
+		$mapper->text('name')
+			->label(trans('bauhaususer::admin.permissions.form.name.label'))
+			->placeholder(trans('bauhaususer::admin.permissions.form.name.placeholder'));
+
+		$mapper->text('value')
+			->label(trans('bauhaususer::admin.permissions.form.value.label'))
+			->placeholder(trans('bauhaususer::admin.permissions.form.value.placeholder'));
+
+		$mapper->textarea('description')
+			->label(trans('bauhaususer::admin.permissions.form.description.label'))
+			->placeholder(trans('bauhaususer::admin.permissions.form.description.placeholder'));
 	}
 
 	/**
@@ -71,9 +86,14 @@ class PermissionAdmin extends Admin
 	 */
 	public function configureFilters($mapper)
 	{
-		$mapper->text('name');
-		$mapper->text('value');
-		$mapper->text('description');
+		$mapper->text('name')
+			->label(trans('bauhaususer::admin.permissions.filter.name'));
+
+		$mapper->text('value')
+			->label(trans('bauhaususer::admin.permissions.filter.value'));
+
+		$mapper->text('description')
+			->label(trans('bauhaususer::admin.permissions.filter.description'));
 	}
 
 }

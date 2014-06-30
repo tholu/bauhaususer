@@ -49,7 +49,7 @@ class SessionsController extends Controller
 		]);
 
 		if ($validator->fails()) {
-			Session::flash('message.error', 'Validation error.');
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.validation-error'));
 			return Redirect::route('admin.sessions.create')
 				->withInput()
 				->withErrors($validator);
@@ -62,11 +62,11 @@ class SessionsController extends Controller
 		];
 
 		if (Auth::attempt($input, Input::has('remember'))) {
-			Session::flash('message.success', 'User logged in.');
+			Session::flash('message.success', trans('bauhaususer::messages.success.messages.sign-in.user-signed-in'));
 			return Redirect::route('admin.dashboard');
 		}
 
-		Session::flash('message.error', 'User not found.');
+		Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.user-not-found'));
 		return Redirect::route('admin.sessions.create')
 			->withInput();
 	}
@@ -79,6 +79,8 @@ class SessionsController extends Controller
 	public function destroy()
 	{
 		Auth::logout();
+
+		Session::flash('message.success', trans('bauhaususer::messages.success.messages.sign-out.user-signed-out'));
 		return Redirect::route('admin.sessions.create');
 	}
 

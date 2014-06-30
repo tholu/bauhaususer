@@ -16,16 +16,16 @@ return [
 	 * @var array
 	 */
 	'menu' => [
-		'title' => 'Users',
+		'title' => trans('bauhaususer::admin.menu'),
 		'children' => [
 			[
-				'title' => 'Overview',
+				'title' => trans('bauhaususer::admin.users.menu'),
 				'class' => 'KraftHaus\BauhausUser\User'
 			], [
-				'title' => 'Groups',
+				'title' => trans('bauhaususer::admin.groups.menu'),
 				'class' => 'KraftHaus\BauhausUser\Group'
 			], [
-				'title' => 'Permissions',
+				'title' => trans('bauhaususer::admin.permissions.menu'),
 				'class' => 'KraftHaus\BauhausUser\Permission'
 			]
 		]

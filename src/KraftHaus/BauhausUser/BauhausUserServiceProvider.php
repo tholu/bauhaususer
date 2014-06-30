@@ -45,7 +45,7 @@ class BauhausUserServiceProvider extends ServiceProvider
 		app('krafthaus.bauhaus.menu')->addMenu('left', Config::get('bauhaususer::config.menu'));
 		if (Auth::check()) {
 			app('krafthaus.bauhaus.menu')->addMenu('right', [
-				'text' => sprintf('Signed in as %s', Auth::user()->fullname)
+				'text' => trans('bauhaususer::admin.signed-in-as', ['name' => Auth::user()->fullname])
 			]);
 
 			app('krafthaus.bauhaus.menu')->addMenu('right', [

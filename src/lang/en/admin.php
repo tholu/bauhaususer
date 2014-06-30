@@ -12,6 +12,7 @@
 return [
 
 	'menu' => 'Users',
+	'signed-in-as' => 'Signed in as :name',
 
 	'users' => [
 		'menu'  => 'Overview',

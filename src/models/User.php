@@ -95,4 +95,25 @@ class User extends Model implements UserInterface, RemindableInterface
 		return $this->belongsToMany('KraftHaus\BauhausUser\Group');
 	}
 
+	/**
+	 * Check if a user has a given permission.
+	 *
+	 * @param  string $value
+	 *
+	 * @access public
+	 * @return bool
+	 */
+	public function hasPermission($value)
+	{
+		foreach ($this->groups as $group) {
+			foreach ($group->permissions as $permission) {
+				if ($permission->value == $value) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 }

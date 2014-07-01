@@ -63,11 +63,12 @@ class GroupAdmin extends Admin
 	public function configureForm($mapper)
 	{
 		$mapper->text('name')
-			->label(trans('bauhaususer::admin.groups.form.name'));
+			->label(trans('bauhaususer::admin.groups.form.name.label'))
+			->placeholder(trans('bauhaususer::admin.groups.form.name.placeholder'));
 
 		$mapper->belongsToMany('permissions')
 			->display('name')
-			->label(trans('bauhaususer::admin.groups.form.permissions'));
+			->label(trans('bauhaususer::admin.groups.form.permissions.label'));
 	}
 
 }

@@ -68,25 +68,30 @@ class UserAdmin extends Admin
 	{
 		$mapper->tab('General', function ($mapper) {
 			$mapper->text('email')
-				->label(trans('bauhaususer::admin.users.form.email'));
+				->label(trans('bauhaususer::admin.users.form.email.label'))
+				->placeholder(trans('bauhaususer::admin.users.form.email.placeholder'));
 
 			$mapper->password('password')
-				->label(trans('bauhaususer::admin.users.form.password'));
+				->label(trans('bauhaususer::admin.users.form.password.label'))
+				->placeholder(trans('bauhaususer::admin.users.form.password.placeholder'));
 
 			$mapper->password('password_confirmation')
-				->label(trans('bauhaususer::admin.users.form.password-confirm'));
+				->label(trans('bauhaususer::admin.users.form.password-confirm.label'))
+				->placeholder(trans('bauhaususer::admin.users.form.password-confirm.placeholder'));
 		});
 
 		$mapper->tab('Info', function ($mapper) {
 			$mapper->text('first_name')
-				->label(trans('bauhaususer::admin.users.form.first-name'));
+				->label(trans('bauhaususer::admin.users.form.first-name.label'))
+				->placeholder(trans('bauhaususer::admin.users.form.first-name.placeholder'));
 
 			$mapper->text('last_name')
-				->label(trans('bauhaususer::admin.users.form.last-name'));
+				->label(trans('bauhaususer::admin.users.form.last-name.label'))
+				->placeholder(trans('bauhaususer::admin.users.form.last-name.placeholder'));
 
 			$mapper->belongsToMany('groups')
 				->display('name')
-				->label(trans('bauhaususer::admin.users.form.groups'));
+				->placeholder(trans('bauhaususer::admin.users.form.groups.label'));
 		});
 	}
 

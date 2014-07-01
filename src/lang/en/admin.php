@@ -26,12 +26,29 @@ return [
 			'groups' => 'Groups'
 		],
 		'form' => [
-			'email'            => 'Email address',
-			'password'         => 'Password',
-			'password-confirm' => 'Confirm Password',
-			'first-name'       => 'First name',
-			'last-name'        => 'Last name',
-			'groups'           => 'Groups'
+			'email' => [
+				'label'       => 'Email address',
+				'placeholder' => 'The users email address'
+			],
+			'password' => [
+				'label'       => 'Password',
+				'placeholder' => 'The users password'
+			],
+			'password-confirm' => [
+				'label'       => 'Confirm Password',
+				'placeholder' => 'Repeat the users password'
+			],
+			'first-name' => [
+				'label'       => 'First name',
+				'placeholder' => 'The users first name'
+			],
+			'last-name' => [
+				'label'       => 'Last name',
+				'placeholder' => 'The users last name'
+			],
+			'groups' => [
+				'label' => 'Groups'
+			]
 		],
 		'filter' => [
 			'email' => 'Email'
@@ -52,8 +69,13 @@ return [
 			'permissions' => 'Permissions'
 		],
 		'form' => [
-			'name'        => 'Name',
-			'permissions' => 'Permissions'
+			'name' => [
+				'label'       => 'Name',
+				'placeholder' => 'The groups name'
+			],
+			'permissions' => [
+				'label' => 'Permissions'
+			]
 		]
 	],
 

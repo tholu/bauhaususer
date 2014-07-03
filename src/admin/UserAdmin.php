@@ -66,7 +66,7 @@ class UserAdmin extends Admin
 	 */
 	public function configureForm($mapper)
 	{
-		$mapper->tab('General', function ($mapper) {
+		$mapper->tab(trans('bauhaususer::admin.users.form.tabs.general'), function ($mapper) {
 			$mapper->text('email')
 				->label(trans('bauhaususer::admin.users.form.email.label'))
 				->placeholder(trans('bauhaususer::admin.users.form.email.placeholder'));
@@ -80,7 +80,7 @@ class UserAdmin extends Admin
 				->placeholder(trans('bauhaususer::admin.users.form.password-confirm.placeholder'));
 		});
 
-		$mapper->tab('Info', function ($mapper) {
+		$mapper->tab(trans('bauhaususer::admin.users.form.tabs.info'), function ($mapper) {
 			$mapper->text('first_name')
 				->label(trans('bauhaususer::admin.users.form.first-name.label'))
 				->placeholder(trans('bauhaususer::admin.users.form.first-name.placeholder'));

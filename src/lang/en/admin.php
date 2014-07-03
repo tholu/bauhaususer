@@ -26,6 +26,10 @@ return [
 			'groups' => 'Groups'
 		],
 		'form' => [
+			'tabs' => [
+				'general' => 'General',
+				'info'    => 'Info'
+			],
 			'email' => [
 				'label'       => 'Email address',
 				'placeholder' => 'The users email address'

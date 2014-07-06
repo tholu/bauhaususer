@@ -33,7 +33,7 @@ class ActivateCommand extends Command
 	 * The console command description.
 	 * @var string
 	 */
-	protected $description = '';
+	protected $description = 'activate a specific user by id';
 
 	/**
 	 * Execute the console command.

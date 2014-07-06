@@ -33,7 +33,7 @@ class DeactivateCommand extends Command
 	 * The console command description.
 	 * @var string
 	 */
-	protected $description = '';
+	protected $description = 'deactivate a specific user by id';
 
 	/**
 	 * Execute the console command.

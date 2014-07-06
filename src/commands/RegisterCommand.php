@@ -33,7 +33,7 @@ class RegisterCommand extends Command
 	 * The console command description.
 	 * @var string
 	 */
-	protected $description = '';
+	protected $description = 'register a new user';
 
 	/**
 	 * Execute the console command.

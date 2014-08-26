@@ -1,8 +1,6 @@
 Bauhaus User - User integration for [Bauhaus](https://github.com/krafthaus/bauhaus)
 ---
 
-[![Latest Stable Version](https://poser.pugx.org/krafthaus/bauhaususer/v/stable.png)](https://packagist.org/packages/krafthaus/bauhaususer)
-[![Latest Unstable Version](https://poser.pugx.org/krafthaus/bauhaususer/v/unstable.png)](https://packagist.org/packages/krafthaus/bauhaususer)
 [![Total Downloads](https://poser.pugx.org/krafthaus/bauhaususer/downloads.png)](https://packagist.org/packages/krafthaus/bauhaususer)
 [![License](https://poser.pugx.org/krafthaus/bauhaususer/license.png)](https://packagist.org/packages/krafthaus/bauhaususer)
 

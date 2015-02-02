@@ -12,7 +12,7 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
-		"krafthaus/bauhaus": "dev-master"
+		"krafthaus/bauhaus": "0.0.*"
 	},
 	"autoload": {
 		"classmap": [

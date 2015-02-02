@@ -20,13 +20,13 @@ return [
 		'children' => [
 			[
 				'title' => trans('bauhaususer::admin.users.menu'),
-				'class' => 'KraftHaus\BauhausUser\User'
+				'class' => 'KraftHaus.BauhausUser.User'
 			], [
 				'title' => trans('bauhaususer::admin.groups.menu'),
-				'class' => 'KraftHaus\BauhausUser\Group'
+				'class' => 'KraftHaus.BauhausUser.Group'
 			], [
 				'title' => trans('bauhaususer::admin.permissions.menu'),
-				'class' => 'KraftHaus\BauhausUser\Permission'
+				'class' => 'KraftHaus.BauhausUser.Permission'
 			]
 		]
 	],

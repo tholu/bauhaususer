@@ -13,6 +13,10 @@ namespace KraftHaus\BauhausUser;
 
 use Illuminate\Support\Facades\Hash;
 use KraftHaus\Bauhaus\Admin;
+use KraftHaus\Bauhaus\Mapper\FilterMapper;
+use KraftHaus\Bauhaus\Mapper\ListMapper;
+use KraftHaus\Bauhaus\Mapper\FormMapper;
+use KraftHaus\Bauhaus\Mapper\ScopeMapper;
 
 /**
  * Class UserAdmin
@@ -25,7 +29,6 @@ class UserAdmin extends Admin
 	 * Public constructor override to set translatable names (singular, plural).
 	 *
 	 * @access public
-	 * @return void
 	 */
 	public function __construct()
 	{
@@ -128,7 +131,7 @@ class UserAdmin extends Admin
 	 * @param  array $input
 	 *
 	 * @access public
-	 * @return void
+	 * @return static
 	 */
 	public function create($input)
 	{

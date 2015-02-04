@@ -47,11 +47,11 @@ class RegisterCommand extends Command
 		try
 		{
 			$user = \Sentry::createUser([
-				'email' => $this->argument('email'),
-				'password' => $this->argument('password'),
-				'first_name' => $this->argument('first_name'),
-				'last_name' => $this->argument('last_name'),
-				'activated' => true
+				'email' 		=> $this->argument('email'),
+				'password' 		=> $this->argument('password'),
+				'first_name'	=> $this->argument('first_name'),
+				'last_name' 	=> $this->argument('last_name'),
+				'activated' 	=> true
 			]);
 
 			$this->info('User created with success');

@@ -43,20 +43,43 @@ class RegisterCommand extends Command
 	 */
 	public function fire()
 	{
-		$email     = $this->argument('email');
-		$password  = Hash::make($this->argument('password'));
-		$firstname = $this->argument('first_name');
-		$lastname  = $this->argument('last_name');
 
-		User::create([
-			'email'      => $email,
-			'password'   => $password,
-			'first_name' => $firstname,
-			'last_name'  => $lastname,
-			'is_active'  => 1
-		]);
+		try
+		{
+			$user = \Sentry::createUser([
+				'email' => $this->argument('email'),
+				'password' => $this->argument('password'),
+				'first_name' => $this->argument('first_name'),
+				'last_name' => $this->argument('last_name'),
+				'activated' => true
+			]);
 
-		$this->info('User created with success');
+			$this->info('User created with success');
+
+			$group = \Sentry::findGroupById(1);
+
+			$user->addGroup($group);
+
+			$this->info('User assignet to group: ' . $group->getName());
+		}
+		catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
+		{
+			$this->info('Login field is required.');
+		}
+		catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e)
+		{
+			$this->info('Password field is required.');
+}
+		catch (\Cartalyst\Sentry\Users\UserExistsException $e)
+		{
+			$this->info('User with this login already exists.');
+		}
+
+		catch (\Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+		{
+			$this->info('Group was not found.');
+		}
+
 	}
 
 	/**

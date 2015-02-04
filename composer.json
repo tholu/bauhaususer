@@ -12,7 +12,8 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
-		"krafthaus/bauhaus": "0.0.*"
+		"krafthaus/bauhaus": "0.0.*",
+	  	"cartalyst/sentry": "~2.1"
 	},
 	"autoload": {
 		"classmap": [

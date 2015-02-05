@@ -31,8 +31,12 @@ return [
 		'title' => 'Whoops!',
 		'messages' => [
 			'sign-in' => [
-				'validation-error' => 'Validation error.',
-				'user-not-found'   => 'User not found'
+				'validation-error' 	=> 'Validation error.',
+				'user-not-found'   	=> 'User not found.',
+				'user-not-active'   => 'User not activated.',
+				'user-suspended'   	=> 'User is suspended for [%s] minutes.',
+				'user-banned'   	=> 'User is banned.',
+				'login-required' 	=> 'Login field is required'
 			]
 		]
 	]

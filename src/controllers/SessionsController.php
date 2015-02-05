@@ -15,9 +15,10 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
+use Cartalyst\Sentry\Users;
+use Cartalyst\Sentry\Throttling;
 
 /**
  * Class SessionsController
@@ -29,7 +30,7 @@ class SessionsController extends Controller
 	/**
 	 * Show the form for creating a new resource.
 	 *
-	 * @return Response
+	 * @return View
 	 */
 	public function create()
 	{
@@ -39,7 +40,7 @@ class SessionsController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @return Response
+	 * @return Redirect
 	 */
 	public function store()
 	{
@@ -55,18 +56,42 @@ class SessionsController extends Controller
 				->withErrors($validator);
 		}
 
-		$input = [
-			'email'     => Input::get('email'),
-			'password'  => Input::get('password'),
-			'is_active' => 1
-		];
+		try {
+			$user = \Sentry::findUserByLogin(Input::get('email'));
 
-		if (Auth::attempt($input, Input::has('remember'))) {
+			\Sentry::login($user,Input::has('remember'));
+
 			Session::flash('message.success', trans('bauhaususer::messages.success.messages.sign-in.user-signed-in'));
 			return Redirect::route('admin.dashboard');
 		}
 
-		Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.user-not-found'));
+		catch (Users\LoginRequiredException $e)
+		{
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.login-required'));
+		}
+		catch (Users\UserNotFoundException $e)
+		{
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.user-not-found'));
+		}
+		catch (Users\UserNotActivatedException $e)
+		{
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.user-not-active'));
+		}
+
+		catch (Throttling\UserSuspendedException $e)
+		{
+			$throttle = \Sentry::findThrottlerByUserLogin(Input::get('email'));
+			$time = $throttle->getSuspensionTime();
+
+			$str = trans('bauhaususer::messages.error.messages.sign-in.user-suspended');
+
+			Session::flash('message.error', str_replace('[%s]',$time,$str));
+		}
+		catch (Throttling\UserBannedException $e)
+		{
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.user-banned'));
+		}
+
 		return Redirect::route('admin.sessions.create')
 			->withInput();
 	}
@@ -74,11 +99,11 @@ class SessionsController extends Controller
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @return Response
+	 * @return Redirect
 	 */
 	public function destroy()
 	{
-		Auth::logout();
+		\Sentry::logout();
 
 		Session::flash('message.success', trans('bauhaususer::messages.success.messages.sign-out.user-signed-out'));
 		return Redirect::route('admin.sessions.create');

@@ -47,9 +47,11 @@ class GroupAdmin extends Admin
 		$mapper->identifier('name')
 			->label(trans('bauhaususer::admin.groups.list.name'));
 
+		/*
 		$mapper->belongsToMany('permissions')
 			->display('name')
 			->label(trans('bauhaususer::admin.groups.list.permissions'));
+		*/
 	}
 
 	/**
@@ -66,9 +68,17 @@ class GroupAdmin extends Admin
 			->label(trans('bauhaususer::admin.groups.form.name.label'))
 			->placeholder(trans('bauhaususer::admin.groups.form.name.placeholder'));
 
+		/*
 		$mapper->belongsToMany('permissions')
 			->display('name')
 			->label(trans('bauhaususer::admin.groups.form.permissions.label'));
+		*/
+	}
+
+	public function create($input) {
+		\Sentry::createGroup([
+			'name'=>$input['name']
+		]);
 	}
 
 }

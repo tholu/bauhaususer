@@ -17,6 +17,10 @@ use KraftHaus\Bauhaus\Mapper\FilterMapper;
 use KraftHaus\Bauhaus\Mapper\ListMapper;
 use KraftHaus\Bauhaus\Mapper\FormMapper;
 use KraftHaus\Bauhaus\Mapper\ScopeMapper;
+use Cartalyst\Sentry\Users;
+use Cartalyst\Sentry\Groups;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class UserAdmin
@@ -54,9 +58,11 @@ class UserAdmin extends Admin
 		$mapper->string('email')
 			->label(trans('bauhaususer::admin.users.list.email'));
 
+		/*
 		$mapper->belongsToMany('groups')
 			->display('name')
 			->label(trans('bauhaususer::admin.users.list.groups'));
+		*/
 	}
 
 	/**
@@ -91,10 +97,11 @@ class UserAdmin extends Admin
 			$mapper->text('last_name')
 				->label(trans('bauhaususer::admin.users.form.last-name.label'))
 				->placeholder(trans('bauhaususer::admin.users.form.last-name.placeholder'));
-
+			/*
 			$mapper->belongsToMany('groups')
 				->display('name')
 				->placeholder(trans('bauhaususer::admin.users.form.groups.label'));
+			*/
 		});
 	}
 
@@ -135,13 +142,29 @@ class UserAdmin extends Admin
 	 */
 	public function create($input)
 	{
-		if ($input['password'] == '') {
-			unset($input['password']);
-		} else {
-			$input['password'] = Hash::make($input['password']);
+		try {
+			// Create the user
+			$user = \Sentry::createUser(array(
+				'email'      => $input['email'],
+				'password'   => $input['password'],
+				'first_name' => $input['first_name'],
+				'last_name'  => $input['last_name'],
+				'activated'  => true,
+			));
+
+			return $user;
+		} catch (Users\LoginRequiredException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.login-required'));
+		} catch (Users\PasswordRequiredException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.password-required'));
+		} catch (Users\UserExistsException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.user.already-exists'));
+		} catch (Groups\GroupNotFoundException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.groups.not-found'));
 		}
 
-		User::create($input);
+
+		return Redirect::refresh();
 	}
 
 	/**

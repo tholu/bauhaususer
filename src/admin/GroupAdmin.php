@@ -12,6 +12,9 @@ namespace KraftHaus\BauhausUser;
  */
 
 use KraftHaus\Bauhaus\Admin;
+use Cartalyst\Sentry\Groups;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class GroupAdmin
@@ -75,10 +78,27 @@ class GroupAdmin extends Admin
 		*/
 	}
 
+	
 	public function create($input) {
-		\Sentry::createGroup([
-			'name'=>$input['name']
-		]);
+
+		try
+		{
+			// Create the group
+			return \Sentry::createGroup([
+				'name'=>$input['name']
+			]);
+
+		}
+		catch (Groups\NameRequiredException $e)
+		{
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.groups.missing-name'));
+		}
+		catch (Groups\GroupExistsException $e)
+		{
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.groups.group-exists'));
+		}
+		
+		return Redirect::refresh();
 	}
 
 }

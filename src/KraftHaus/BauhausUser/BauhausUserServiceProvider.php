@@ -15,6 +15,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
+use Cartalyst\Sentry;
 
 /**
  * Class BauhausUserServiceProvider
@@ -43,13 +44,17 @@ class BauhausUserServiceProvider extends ServiceProvider
 
 		// Add the BauhausUser menu items
 		app('krafthaus.bauhaus.menu')->addMenu('left', Config::get('bauhaususer::config.menu'));
-		if (Auth::check()) {
+
+		if (\Sentry::check()) {
+			
+			$curentUser = \Sentry::getUser();
+			
 			app('krafthaus.bauhaus.menu')->addMenu('right', [
-				'text' => trans('bauhaususer::admin.signed-in-as', ['name' => Auth::user()->fullname])
+				'text' => trans('bauhaususer::admin.signed-in-as', ['name' => $curentUser->last_name . ' ' . $curentUser->first_name])
 			]);
 
 			app('krafthaus.bauhaus.menu')->addMenu('right', [
-				'image' => sprintf('http://www.gravatar.com/avatar/%s?s=35', md5(Auth::user()->email))
+				'image' => sprintf('http://www.gravatar.com/avatar/%s?s=35', md5($curentUser->getLogin()))
 			]);
 
 			app('krafthaus.bauhaus.menu')->addMenu('right', [

@@ -12,9 +12,9 @@
 return [
 
 	'success' => [
-		'title' => 'Success!',
+		'title'    => 'Success!',
 		'messages' => [
-			'sign-in' => [
+			'sign-in'  => [
 				'user-signed-in' => 'User logged in.'
 			],
 			'sign-out' => [
@@ -27,16 +27,25 @@ return [
 		'title' => 'Warning!'
 	],
 
-	'error' => [
-		'title' => 'Whoops!',
+	'error'   => [
+		'title'    => 'Whoops!',
 		'messages' => [
 			'sign-in' => [
-				'validation-error' 	=> 'Validation error.',
-				'user-not-found'   	=> 'User not found.',
+				'validation-error'  => 'Validation error.',
+				'user-not-found'    => 'User not found.',
 				'user-not-active'   => 'User not activated.',
-				'user-suspended'   	=> 'User is suspended for [%s] minutes.',
-				'user-banned'   	=> 'User is banned.',
-				'login-required' 	=> 'Login field is required'
+				'user-suspended'    => 'User is suspended for [%s] minutes.',
+				'user-banned'       => 'User is banned.',
+				'login-required'    => 'Login field is required',
+				'password-required' => 'Password field is required'
+			],
+			'groups'  => [
+				'missing-name' => 'Name field is required',
+				'group-exists' => 'Group already exists',
+				'not-found'    => 'Group was not found',
+			],
+			'user'    => [
+				'already-exists' => 'User with this login already exists'
 			]
 		]
 	]

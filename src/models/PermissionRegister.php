@@ -17,16 +17,17 @@ use Illuminate\Database\Eloquent\Model;
  * Class Permission
  * @package KraftHaus\BauhausUser
  */
-class Permission extends Model
+class PermissionRegister extends Model
 {
+
+	protected $table = 'permissions_register';
 
 	/**
 	 * The validation rules.
 	 * @var array
 	 */
 	public static $rules = [
-		'name'  => ['required'],
-		'value' => ['required']
+		'name'  => ['required']
 	];
 
 	/**
@@ -34,9 +35,7 @@ class Permission extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'name',
-		'value',
-		'description'
+		'name'
 	];
 
 }

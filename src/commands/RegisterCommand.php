@@ -11,8 +11,11 @@ namespace KraftHaus\BauhausUser;
  * file that was distributed with this source code.
  */
 
+use Cartalyst\Sentry\Groups\GroupNotFoundException;
+use Cartalyst\Sentry\Users\LoginRequiredException;
+use Cartalyst\Sentry\Users\PasswordRequiredException;
+use Cartalyst\Sentry\Users\UserExistsException;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -62,20 +65,20 @@ class RegisterCommand extends Command
 
 			$this->info('User assignet to group: ' . $group->getName());
 		}
-		catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
+		catch (LoginRequiredException $e)
 		{
 			$this->info('Login field is required.');
 		}
-		catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e)
+		catch (PasswordRequiredException $e)
 		{
 			$this->info('Password field is required.');
 }
-		catch (\Cartalyst\Sentry\Users\UserExistsException $e)
+		catch (UserExistsException $e)
 		{
 			$this->info('User with this login already exists.');
 		}
 
-		catch (\Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+		catch (GroupNotFoundException $e)
 		{
 			$this->info('Group was not found.');
 		}

@@ -50,11 +50,6 @@ class GroupAdmin extends Admin
 		$mapper->identifier('name')
 			->label(trans('bauhaususer::admin.groups.list.name'));
 
-		/*
-		$mapper->belongsToMany('permissions')
-			->display('name')
-			->label(trans('bauhaususer::admin.groups.list.permissions'));
-		*/
 	}
 
 	/**
@@ -67,38 +62,75 @@ class GroupAdmin extends Admin
 	 */
 	public function configureForm($mapper)
 	{
-		$mapper->text('name')
-			->label(trans('bauhaususer::admin.groups.form.name.label'))
-			->placeholder(trans('bauhaususer::admin.groups.form.name.placeholder'));
+		$mapper->tab(trans('bauhaususer::admin.users.form.tabs.general'), function ($mapper) {
 
-		/*
-		$mapper->belongsToMany('permissions')
-			->display('name')
-			->label(trans('bauhaususer::admin.groups.form.permissions.label'));
-		*/
+			$mapper->text('name')
+				->label(trans('bauhaususer::admin.groups.form.name.label'))
+				->placeholder(trans('bauhaususer::admin.groups.form.name.placeholder'));
+		});
+
+		$mapper->tab(trans('bauhaususer::admin.users.form.tabs.permissions'), function ($mapper) {
+			$mapper->permissions('none')->label('');
+
+		});
 	}
 
-	
-	public function create($input) {
 
-		try
-		{
+	/**
+	 * @param $input
+	 * @return Groups\GroupInterface
+	 */
+	public function create($input)
+	{
+
+		try {
 			// Create the group
 			return \Sentry::createGroup([
-				'name'=>$input['name']
+				'name' => $input['name']
 			]);
 
-		}
-		catch (Groups\NameRequiredException $e)
-		{
+		} catch (Groups\NameRequiredException $e) {
 			Session::flash('message.error', trans('bauhaususer::messages.error.messages.groups.missing-name'));
-		}
-		catch (Groups\GroupExistsException $e)
-		{
+		} catch (Groups\GroupExistsException $e) {
 			Session::flash('message.error', trans('bauhaususer::messages.error.messages.groups.group-exists'));
 		}
-		
+
 		return Redirect::refresh();
+	}
+
+	/**
+	 * @param $input
+	 * @return bool
+	 */
+	public function update($input)
+	{
+
+		try {
+			$group = \Sentry::findGroupById($input['group_id']);
+			$group->name = $input['name'];
+
+			$permissions = [];
+
+			if (isset($input['permissions']) && is_array($input['permissions'])) {
+				foreach ($input['permissions'] AS $p) {
+					$permissions[$p] = 1;
+
+				}
+
+			}
+
+			$group->permissions = $permissions;
+			
+			return $group->save();
+
+		} catch (Groups\NameRequiredException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.groups.missing-name'));
+		} catch (Groups\GroupExistsException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.groups.group-exists'));
+		}
+
+		return Redirect::refresh();
+
 	}
 
 }

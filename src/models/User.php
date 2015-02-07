@@ -72,6 +72,17 @@ class User extends Model implements UserInterface, RemindableInterface
 	}
 
 	/**
+	 * Groups relation.
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function groups()
+	{
+		return $this->belongsToMany('KraftHaus\BauhausUser\Group','users_groups');
+	}
+
+	/**
 	 * Active scope.
 	 *
 	 * @param $query
@@ -81,19 +92,10 @@ class User extends Model implements UserInterface, RemindableInterface
 	 */
 	public function scopeActive($query)
 	{
-		return $query->where('is_active', '1');
+		return $query->where('activated', '1');
 	}
 
-	/**
-	 * Groups relation.
-	 *
-	 * @access public
-	 * @return mixed
-	 */
-	public function groups()
-	{
-		return $this->belongsToMany('KraftHaus\BauhausUser\Group');
-	}
+
 
 	/**
 	 * Check if a user has a given permission.

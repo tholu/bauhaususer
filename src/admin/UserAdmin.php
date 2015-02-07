@@ -21,6 +21,7 @@ use Cartalyst\Sentry\Users;
 use Cartalyst\Sentry\Groups;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use TijsVerkoyen\CssToInlineStyles\Exception;
 
 /**
  * Class UserAdmin
@@ -87,6 +88,10 @@ class UserAdmin extends Admin
 			$mapper->password('password_confirmation')
 				->label(trans('bauhaususer::admin.users.form.password-confirm.label'))
 				->placeholder(trans('bauhaususer::admin.users.form.password-confirm.placeholder'));
+
+			$mapper->belongsToMany('groups')
+				->display('name')
+				->placeholder(trans('bauhaususer::admin.users.form.groups.label'));
 		});
 
 		$mapper->tab(trans('bauhaususer::admin.users.form.tabs.info'), function ($mapper) {
@@ -97,12 +102,9 @@ class UserAdmin extends Admin
 			$mapper->text('last_name')
 				->label(trans('bauhaususer::admin.users.form.last-name.label'))
 				->placeholder(trans('bauhaususer::admin.users.form.last-name.placeholder'));
-			/*
-			$mapper->belongsToMany('groups')
-				->display('name')
-				->placeholder(trans('bauhaususer::admin.users.form.groups.label'));
-			*/
+
 		});
+		
 	}
 
 	/**
@@ -116,6 +118,12 @@ class UserAdmin extends Admin
 	{
 		$mapper->text('email')
 			->label(trans('bauhaususer::admin.users.filter.email'));
+		
+		$mapper->text('last_name')
+			->label(trans('bauhaususer::admin.users.filter.last_name'));
+		
+		$mapper->text('first_name')
+			->label(trans('bauhaususer::admin.users.filter.first_name'));
 	}
 
 	/**
@@ -172,20 +180,71 @@ class UserAdmin extends Admin
 	 *
 	 * @param  array $input
 	 *
-	 * @access public
-	 * @return void
+	 * @return bool
 	 */
 	public function update($input)
 	{
-		$user = User::find($input['user_id']);
+		try {
+			$user = \Sentry::findUserById($input['user_id']);
 
-		if ($input['password'] == '') {
-			unset($input['password']);
-		} else {
-			$input['password'] = Hash::make($input['password']);
+			/* update password only if the password fields are set */
+			if ($input['password'] != '' && $input['password_confirmation'] != '') {
+				if ($input['password'] != $input['password_confirmation']) {
+					Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.no-pwd-match'));
+
+					return Redirect::refresh();
+				}
+
+				if ($user->checkPassword($input['password'])) {
+					Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.no-pwd-change'));
+
+					return Redirect::refresh();
+				}
+
+				$user->password = $input['password'];
+				
+			}
+			
+			$user->email = $input['email'];
+			$user->first_name = $input['first_name'];
+			$user->last_name = $input['last_name'];
+			
+			if (isset($input['groups']) && is_array($input['groups']) && count($input['groups']) > 0) {
+
+				/* Remove all groups associated to user */
+				$allGroups = \Sentry::findAllGroups();
+
+				foreach ($allGroups AS $grp) {
+					$user->removeGroup($grp);
+
+				}
+
+				/* Add groups based on the groups input field */
+				foreach ($input['groups'] as $grp) {
+					$group = \Sentry::findGroupById($grp);
+
+					$user->addGroup($group);
+				}
+			}
+
+
+			return $user->save();
+
+		} catch (Users\LoginRequiredException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.login-required'));
+		} catch (Users\PasswordRequiredException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.sign-in.password-required'));
+		} catch (Users\UserExistsException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.user.already-exists'));
+		} catch (Groups\GroupNotFoundException $e) {
+			Session::flash('message.error', trans('bauhaususer::messages.error.messages.groups.not-found'));
 		}
 
-		$user->update($input);
+
+		return Redirect::refresh();
+		
+
+		
 	}
 
 }

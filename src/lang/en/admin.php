@@ -15,7 +15,7 @@ return [
 	'signed-in-as' => 'Signed in as :name',
 
 	'users' => [
-		'menu'  => 'Overview',
+		'menu'  => 'Users',
 		'title' => [
 			'singular' => 'User',
 			'plural'   => 'Users'
@@ -27,8 +27,9 @@ return [
 		],
 		'form' => [
 			'tabs' => [
-				'general' => 'General',
-				'info'    => 'Info'
+				'general' 		=> 'General',
+				'info'    		=> 'Info',
+				'permissions'	=> 'Permissions',
 			],
 			'email' => [
 				'label'       => 'Email address',
@@ -55,7 +56,9 @@ return [
 			]
 		],
 		'filter' => [
-			'email' => 'Email'
+			'email' => 'Email',
+			'last_name' => 'Last name',
+			'first_name' => 'First name',
 		],
 		'scope' => [
 			'active-users' => 'Active users'

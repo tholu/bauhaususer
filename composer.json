@@ -20,6 +20,7 @@
 			"src/controllers",
 			"src/models",
 			"src/admin",
+			"src/seeds",
 			"src/commands"
 		],
 		"psr-0": {

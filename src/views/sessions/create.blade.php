@@ -2,64 +2,42 @@
 
 @section('content')
 	<div class="row">
-		<div class="col-sm-4 col-sm-offset-4">
+		<div class="col-sm-6 col-md-4 col-md-offset-4">
 
-			@if (Session::has('message.success'))
-				<div class="alert alert-success">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<strong>{{ trans('bauhaususer::messages.success.title') }}</strong>
-					{{ Session::get('message.success') }}
-				</div>
-			@endif
+			<div class="account-wall">
+				<img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+					 alt="">
 
-			@if (Session::has('message.error'))
-				<div class="alert alert-danger">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<strong>{{ trans('bauhaususer::messages.error.title') }}</strong>
-					{{ Session::get('message.error') }}
-				</div>
-			@endif
+				@if (Session::has('message.success'))
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<strong>{{ trans('bauhaususer::messages.success.title') }}</strong>
+						{{ Session::get('message.success') }}
+					</div>
+				@endif
 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					{{ Config::get('bauhaus::admin.title') }}
-				</div>
-				<div class="panel-body">
-					{{ Form::open(['method' => 'POST', 'route' => 'admin.sessions.store', 'class' => 'form-horizontal']) }}
+				@if (Session::has('message.error'))
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<strong>{{ trans('bauhaususer::messages.error.title') }}</strong>
+						{{ Session::get('message.error') }}
+					</div>
+				@endif
 
-						<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-							<label for="f-email" class="col-sm-4 control-label">{{ trans('bauhaususer::form.field.email.title') }}</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="f-email" name="email" value="{{ Input::old('email') }}" placeholder="{{ trans('bauhaususer::form.field.email.title') }}">
-							</div>
-						</div>
+				{{ Form::open(['method' => 'POST', 'route' => 'admin.sessions.store', 'class' => 'form-signin']) }}
 
-						<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-							<label for="f-password" class="col-sm-4 control-label">{{ trans('bauhaususer::form.field.password.title') }}</label>
-							<div class="col-sm-8">
-								<input type="password" class="form-control" id="f-password" name="password" placeholder="{{ trans('bauhaususer::form.field.password.placeholder') }}">
-							</div>
-						</div>
+				{{ Form::text('email',null,['placeholder'=>trans('bauhaususer::form.field.email.title'),'required','autofocus','class'=>'form-control'])}}
+				{{ Form::password('password',['placeholder'=>trans('bauhaususer::form.field.password.title'),'required','class'=>'form-control'])}}
 
-						<div class="form-group">
-							<div class="col-sm-8 col-sm-offset-4">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" name="remember">
-										{{ trans('bauhaususer::form.remember-me') }}
-									</label>
-								</div>
-							</div>
-						</div>
+				{{Form::submit(trans('bauhaususer::form.field.submit.title'),['class'=>'btn btn-lg btn-primary btn-block'])}}
+					<label class="checkbox pull-left">
+						<input type="checkbox" value="remember-me">
+						{{ trans('bauhaususer::form.remember-me') }}
+					</label>
+				{{ Form::close() }}
 
-						<div class="form-group">
-							<div class="col-sm-8 col-sm-offset-4">
-								<input type="submit" class="btn btn-default btn-red btn-rounded" value="{{ trans('bauhaususer::form.field.submit.title') }}">
-							</div>
-						</div>
 
-					{{ Form::close() }}
-				</div>
+				<div class="clearfix"></div>
 			</div>
 
 		</div>

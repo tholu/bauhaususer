@@ -88,9 +88,19 @@ class BauhausUserServiceProvider extends ServiceProvider
 			return new DeactivateCommand($app);
 		});
 
+
+		// add the grant command to the application
+		$this->app['bauhaus:user:grant'] = $this->app->share(function($app) {
+			return new GrantCommand($app);
+		});
+
+
 		$this->commands('bauhaus:user:register');
 		$this->commands('bauhaus:user:activate');
 		$this->commands('bauhaus:user:deactivate');
+
+		$this->commands('bauhaus:user:grant');
+
 	}
 
 	/**

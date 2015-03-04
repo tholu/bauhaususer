@@ -62,14 +62,13 @@ class GrantCommand extends Command
 
 
 
-		$model = $this->argument('moduleName');
+		$model = $this->option('module');
 
 
 		if ($model != '') {
-			$model = $this->argument('moduleName');
+			$model = $this->option('module');
 
 			$this->grantPermission($model);
-			$this->storePermission($model);
 
 		} else {
 			$permissions = $this->getStoredPermissions();
@@ -126,7 +125,7 @@ class GrantCommand extends Command
 
 	}
 
-	private function grantPermission($model = '') {
+	public function grantPermission($model = '') {
 		\Eloquent::unguard();
 
 		PermissionRegister::firstOrCreate([
@@ -147,17 +146,19 @@ class GrantCommand extends Command
 		$adminGroup->save();
 
 		$this->info('General permission assigned to group: ' . $adminGroup->getName());
+
+
+		$this->storePermission($model);
 	}
 
 	/**
-	 * Get the console command arguments.
+	 * Get the console command options.
 	 *
 	 * @return array
 	 */
-	protected function getArguments()
-	{
+	protected function getOptions() {
 		return array(
-			['moduleName',      InputArgument::OPTIONAL, 'Module Name']
+			['module', null,  InputArgument::OPTIONAL, 'Module Name',null]
 		);
 	}
 
